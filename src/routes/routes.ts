@@ -21,3 +21,27 @@ router.post("/post", async (req, res) => {
 
 })
 
+// router.put("/put",async(req,res)=>{
+//     const updateUSer:User = req.body;
+
+//     const result = await userService.updateUSer()
+
+router.get("/get:id", async (req, res) => {
+    const users = await userService.findByID(req.params.id)
+    res.json(users)
+})
+
+router.delete("/delete:id", async (req, res) => {
+    const userDelete = await userService.deleteUser(req.params.id)
+
+    if (!res.status(200)) {
+        res.json({ msg: 'user not deleted' })
+    }
+
+    res.status(200).json(userDelete)
+})
+
+router.put("/put:id", async (req, res) => {
+    const user = await userService.updateUSer(req.params.id, req.body)
+    res.json(user)
+})

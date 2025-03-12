@@ -15,4 +15,13 @@ export class UserService implements IUserRepository {
     findUser(): Promise<User[]> {
         return this.userRepository.findUser()
     }
+    updateUSer(id: string, User: Partial<User>): Promise<User | null> {
+        return this.userRepository.updateUSer(id, User)
+    }
+    deleteUser(id: string): Promise<void> {
+        return this.userRepository.deleteUser(id)
+    }
+    findByID(id: string): Promise<User | null> {
+        return this.userRepository.findByID(id)
+    }
 }

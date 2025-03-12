@@ -1,14 +1,24 @@
+import { UserModel } from "@models/UserModels";
 import { IUserRepository, User } from "types/UserTypes";
 
 export class UserRepository implements IUserRepository {
-    private users: User[] = [];
+
 
     async createUser(user: User): Promise<User> {
-        this.users.push(user)
-        return user
+        const newUser = new UserModel(user)
+        return await newUser.save()
     }
     async findUser(): Promise<User[]> {
-        return this.users;
+        return await UserModel.find().exec()
+    }
+    async updateUSer(id: string, User: Partial<User>): Promise<User | null> {
+        return await UserModel.findByIdAndUpdate(id, User, { new: true })
+    }
+    async deleteUser(id: string): Promise<void> {
+        const deleted = await UserModel.findByIdAndDelete(id)
+    }
+    async findByID(id: string): Promise<User | null> {
+        return await UserModel.findById(id).exec()
     }
 
 }
